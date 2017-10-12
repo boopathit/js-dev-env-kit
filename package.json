@@ -1,13 +1,20 @@
-/**
- * Created by boopathi on 18-08-2017.
- */
 {
   "name": "javascript-development-environment",
   "version": "0.0.1",
   "description": "JavaScript development environment Starter Kit",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm-run-all --parallel security-check open:src lint:watch test:watch",
+    "prestart": "babel-node buildScripts/startMessage.js",
+    "open:src": "babel-node buildScripts/srcServer.js",
+    "security-check": "nsp check",
+    "lint": "esw webpack.cofig.* src buildScripts --color",
+    "lint:watch": "npm run lint -- --watch",
+    "localtunnel": "lt --port 3000",
+    "share": "npm-run-all --parallel open:src localtunnel",
+    "test": "mocha --reporter progress buildScripts/testSetup.js \"src/**/*.test.js\"",
+    "test:debug": "mocha --inspect-brk buildScripts/testSetup.js \"src/**/*.test.js\"",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
